@@ -2,8 +2,13 @@ package com.avogelm.indtxprices.driveradapters;
 
 import com.avogelm.indtxprices.application.driverports.GetProductPriceUseCase;
 import com.avogelm.indtxprices.application.driverports.ProductPriceDTO;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -16,11 +21,19 @@ public class PricesController {
     private GetProductPriceUseCase getProductPriceUseCase;
 
     @GetMapping("{brandId}/{productId}")
+    @ResponseStatus(HttpStatus.OK)
     public ProductPriceDTO getProductPrice(
-            @PathVariable @NotBlank(message = "Brand ID is Required") int brandId,
-            @PathVariable @NotBlank(message = "Product ID is Required") int productId,
-            @RequestParam @NotBlank(message = "Application Timestamp Required") Date timestamp
-            ) {
+            @PathVariable @Min(value=1, message="Brand ID must be >= 1")
+            int brandId,
+
+            @PathVariable @Min(value=1, message="Product ID must be >= 1")
+            int productId,
+
+            @RequestParam("timestamp")
+            @NotNull(message = "Application Timestamp Required")
+            @DateTimeFormat(pattern="yyyy-MM-dd-HH.mm.ss")
+            Date timestamp
+    ) {
         return this.getProductPriceUseCase.handle(
                 brandId,
                 productId,

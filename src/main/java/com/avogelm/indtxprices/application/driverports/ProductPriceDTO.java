@@ -12,4 +12,24 @@ public class ProductPriceDTO {
     public ProductPriceDTO() {
         //TODO from entity
     }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public int getPriceList() {
+        return priceList;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public float getPrice() {
+        return price;
+    }
 }
