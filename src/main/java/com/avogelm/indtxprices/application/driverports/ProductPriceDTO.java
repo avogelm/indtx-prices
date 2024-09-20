@@ -48,4 +48,18 @@ public class ProductPriceDTO {
     public float getPrice() {
         return price;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof ProductPriceDTO objMatch)) {
+            return false;
+        }
+
+        return this.priceList == objMatch.getPriceList()
+            && this.brandId == objMatch.getBrandId()
+            && this.productId == objMatch.getProductId()
+            && this.startDate == objMatch.getStartDate()
+            && this.endDate == objMatch.getEndDate()
+            && this.price == objMatch.getPrice();
+    }
 }

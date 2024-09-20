@@ -1,6 +1,6 @@
-insert into prices (brandId, startDate, endDate, priceList, productId, priority, price, curr)
+insert into prices (brand_id, start_date, end_date, price_list, product_id, priority, price, curr)
 values
-(1, TIMESTAMP '2020-06-14 00.00.00', TIMESTAMP '2020-12-31 23.59.59', 1, 35455, 0, 35.50, 'EUR'),
-(1, TIMESTAMP '2020-06-14 15.00.00', TIMESTAMP ' 2020-06-14 18.30.00', 2, 35455, 1, 25.45, 'EUR'),
-(1, TIMESTAMP '2020-06-15 00.00.00', TIMESTAMP '2020-06-15-11.00.00', 3, 35455, 1, 30.50, 'EUR'),
-(1, TIMESTAMP '2020-06-15 16.00.00', TIMESTAMP '2020-12-31 23.59.59', 4, 35455, 1, 38.95, 'EUR');
+(1, {ts '2020-06-14 00:00:00.69'}, {ts '2020-12-31 23:59:59.69'}, 1, 35455, 0, 35.50, 'EUR'),
+(1, {ts '2020-06-14 15:00:00.69'}, {ts '2020-06-14 18:30:00.69'}, 2, 35455, 1, 25.45, 'EUR'),
+(1, {ts '2020-06-15 00:00:00.69'}, {ts '2020-06-15 11:00:00.69'}, 3, 35455, 1, 30.50, 'EUR'),
+(1, {ts '2020-06-15 16:00:00.69'}, {ts '2020-12-31 23:59:59.69'}, 4, 35455, 1, 38.95, 'EUR');

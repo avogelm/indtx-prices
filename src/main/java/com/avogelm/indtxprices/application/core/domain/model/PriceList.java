@@ -3,27 +3,49 @@ package com.avogelm.indtxprices.application.core.domain.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "prices")
 public class PriceList {
+    @Column(name = "price_list")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int priceList;
 
+    @Column(name = "brand_id")
     private int brandId;
 
+    @Column(name = "product_id")
     private int productId;
 
-    private Timestamp startDate;
+    @Column(name = "start_date", columnDefinition = "TIMESTAMP")
+    private Date startDate;
 
-    private Timestamp endDate;
+    @Column(name = "end_date", columnDefinition = "TIMESTAMP")
+    private Date endDate;
 
+    @Column(name = "priority")
     private int priority;
 
+    @Column(name = "price")
     private float price;
 
+    @Column(name = "curr")
     private String curr;
+
+    public PriceList() {}
+
+    public PriceList(int priceList, int brandId, int productId, Timestamp startDate, Timestamp endDate, int priority, float price, String curr) {
+        this.priceList = priceList;
+        this.brandId = brandId;
+        this.productId = productId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.priority = priority;
+        this.price = price;
+        this.curr = curr;
+    }
 
     public int getPriceList() {
         return priceList;
@@ -49,7 +71,7 @@ public class PriceList {
         this.productId = productId;
     }
 
-    public Timestamp getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
@@ -57,7 +79,7 @@ public class PriceList {
         this.startDate = startDate;
     }
 
-    public Timestamp getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 

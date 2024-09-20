@@ -4,6 +4,8 @@ import com.avogelm.indtxprices.application.driverports.GetProductPriceUseCase;
 import com.avogelm.indtxprices.application.driverports.ProductPriceDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 class PricesControllerTest {
 
     @MockBean
@@ -29,6 +32,21 @@ class PricesControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Test
+    void getProductPriceWithErrorInPath() throws Exception{
+        int brandId = 1;
+        int productId = 35455;
+
+        ResultActions result = mockMvc.perform(
+                get("/api/prices/{brandId}{productId}",
+                        brandId,
+                        productId
+                )
+        );
+
+        result.andExpect(status().isNotFound());
+        verifyNoInteractions(getProductPriceUseCase);
+    }
 
     @Test
     void getProductPriceWithEmptyTimestamp() throws Exception{
@@ -39,6 +57,27 @@ class PricesControllerTest {
                 get("/api/prices/{brandId}/{productId}",
                         brandId,
                         productId
+                )
+        );
+
+        result.andExpect(status().isBadRequest());
+        verifyNoInteractions(getProductPriceUseCase);
+    }
+
+    @Test
+    void getProductPriceWithTimestampWithWrongFormat() throws Exception{
+        int brandId = 1;
+        int productId = 35455;
+
+        Date timestamp = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM-HH:mm:ss");
+        String formattedTimestamp = formatter.format(timestamp);
+
+        ResultActions result = mockMvc.perform(
+                get("/api/prices/{brandId}/{productId}?timestamp={timestamp}",
+                        brandId,
+                        productId,
+                        formattedTimestamp
                 )
         );
 
