@@ -3,8 +3,6 @@ package com.avogelm.indtxprices.driveradapters;
 import com.avogelm.indtxprices.application.driverports.GetProductPriceUseCase;
 import com.avogelm.indtxprices.application.driverports.ProductPriceDTO;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
