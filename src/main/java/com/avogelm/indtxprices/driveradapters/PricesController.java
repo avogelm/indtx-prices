@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("api/prices")
@@ -29,13 +29,13 @@ public class PricesController {
 
             @RequestParam("timestamp")
             @NotNull(message = "Application Timestamp Required")
-            @DateTimeFormat(pattern="yyyy-MM-dd-HH.mm.ss")
-            Date timestamp
+            @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+            LocalDateTime dateTime
     ) {
         return this.getProductPriceUseCase.handle(
                 brandId,
                 productId,
-                timestamp
+                dateTime
         );
     }
 }

@@ -13,12 +13,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.mockito.Mockito.*;
+import java.time.LocalDateTime;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,131 +33,82 @@ class GetProductPriceHandlerTest {
     void errorInRepository() {
         int brandId = 1;
         int productId = 35455;
-        Date timestamp = new Date();
+        LocalDateTime dateTime = LocalDateTime.now();
 
         doThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR))
                 .when(this.pricesRepository)
-                .getProductPrices(anyInt(), anyInt(), any(Date.class));
+                .getProductPrice(anyInt(), anyInt(), any(LocalDateTime.class));
 
         try {
             this.getProductPriceUseCase.handle(
                     brandId,
                     productId,
-                    timestamp
+                    dateTime
             );
         } catch (Exception e) {
             assertInstanceOf(ResponseStatusException.class, e);
         }
 
         verify(this.pricesRepository, times(1))
-                .getProductPrices(eq(brandId), eq(productId), eq(timestamp));
+                .getProductPrice(eq(brandId), eq(productId), eq(dateTime));
     }
 
     @Test
     void priceNotFound() {
         int brandId = 1;
         int productId = 35455;
-        Date timestamp = new Date();
+        LocalDateTime dateTime = LocalDateTime.now();
 
-        doReturn(new ArrayList<PriceList>())
+        doReturn(null)
                 .when(this.pricesRepository)
-                .getProductPrices(anyInt(), anyInt(), any(Date.class));
+                .getProductPrice(anyInt(), anyInt(), any(LocalDateTime.class));
 
         try {
             this.getProductPriceUseCase.handle(
                     brandId,
                     productId,
-                    timestamp
+                    dateTime
             );
         } catch (Exception e) {
             assertInstanceOf(ResponseStatusException.class, e);
         }
 
         verify(this.pricesRepository, times(1))
-                .getProductPrices(eq(brandId), eq(productId), eq(timestamp));
+                .getProductPrice(eq(brandId), eq(productId), eq(dateTime));
     }
 
     @Test
-    void uniquePriceFound() {
+    void priceFound() {
         int brandId = 1;
         int productId = 35455;
-        Date timestamp = new Date();
+        LocalDateTime dateTime = LocalDateTime.now();
 
-        PriceList mockPriceList = new PriceList(
+        PriceList mockResult = new PriceList(
                 1,
                 brandId,
                 productId,
-                new Timestamp(11111),
-                new Timestamp(22222),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 1,
                 10.0f,
                 "EUR"
         );
 
-        List<PriceList> mockResult = new ArrayList<>();
-        mockResult.add(mockPriceList);
 
         doReturn(mockResult)
                 .when(this.pricesRepository)
-                .getProductPrices(anyInt(), anyInt(), any(Date.class));
+                .getProductPrice(anyInt(), anyInt(), any(LocalDateTime.class));
 
         ProductPriceDTO result = this.getProductPriceUseCase.handle(
                 brandId,
                 productId,
-                timestamp
+                dateTime
         );
 
         verify(this.pricesRepository, times(1))
-                .getProductPrices(eq(brandId), eq(productId), eq(timestamp));
+                .getProductPrice(eq(brandId), eq(productId), eq(dateTime));
 
-        assertEquals(new ProductPriceDTO(mockPriceList), result);
+        assertEquals(new ProductPriceDTO(mockResult), result);
     }
 
-    @Test
-    void multiplePricesFoundReturnsTheOneWithMorePriority() {
-        int brandId = 1;
-        int productId = 35455;
-        Date timestamp = new Date();
-
-        PriceList mockPriceList1 = new PriceList(
-                1,
-                brandId,
-                productId,
-                new Timestamp(11111),
-                new Timestamp(22222),
-                1,
-                10.0f,
-                "EUR"
-        );
-
-        PriceList mockPriceList2 = new PriceList(
-                1,
-                brandId,
-                productId,
-                new Timestamp(11112),
-                new Timestamp(22223),
-                2,
-                15.0f,
-                "EUR"
-        );
-
-        List<PriceList> mockResult = new ArrayList<>();
-        mockResult.add(mockPriceList1);
-        mockResult.add(mockPriceList2);
-
-        doReturn(mockResult)
-                .when(this.pricesRepository)
-                .getProductPrices(anyInt(), anyInt(), any(Date.class));
-
-        ProductPriceDTO result = this.getProductPriceUseCase.handle(
-                brandId,
-                productId,
-                timestamp
-        );
-
-        verify(this.pricesRepository, times(1))
-                .getProductPrices(eq(brandId), eq(productId), eq(timestamp));
-
-        assertEquals(new ProductPriceDTO(mockPriceList2), result);
-    }
 }

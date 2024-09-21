@@ -2,9 +2,8 @@ package com.avogelm.indtxprices.application.drivenports;
 
 import com.avogelm.indtxprices.application.core.domain.model.PriceList;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
 public interface PricesRepository {
-    public List<PriceList> getProductPrices(int brandId, int productId, Date timestamp);
+    public PriceList getProductPrice(int brandId, int productId, LocalDateTime dateTime);
 }

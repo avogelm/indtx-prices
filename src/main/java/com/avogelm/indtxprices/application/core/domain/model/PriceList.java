@@ -2,8 +2,7 @@ package com.avogelm.indtxprices.application.core.domain.model;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "prices")
@@ -20,10 +19,10 @@ public class PriceList {
     private int productId;
 
     @Column(name = "start_date", columnDefinition = "TIMESTAMP")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "end_date", columnDefinition = "TIMESTAMP")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @Column(name = "priority")
     private int priority;
@@ -36,7 +35,7 @@ public class PriceList {
 
     public PriceList() {}
 
-    public PriceList(int priceList, int brandId, int productId, Timestamp startDate, Timestamp endDate, int priority, float price, String curr) {
+    public PriceList(int priceList, int brandId, int productId, LocalDateTime startDate, LocalDateTime endDate, int priority, float price, String curr) {
         this.priceList = priceList;
         this.brandId = brandId;
         this.productId = productId;
@@ -49,10 +48,6 @@ public class PriceList {
 
     public int getPriceList() {
         return priceList;
-    }
-
-    public void setPriceList(int priceList) {
-        this.priceList = priceList;
     }
 
     public int getBrandId() {
@@ -71,24 +66,20 @@ public class PriceList {
         this.productId = productId;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Timestamp startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Timestamp endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public int getPriority() {
-        return priority;
     }
 
     public void setPriority(int priority) {
@@ -101,10 +92,6 @@ public class PriceList {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public String getCurr() {
-        return curr;
     }
 
     public void setCurr(String curr) {

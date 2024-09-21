@@ -14,8 +14,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -31,6 +32,8 @@ class PricesControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    private DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Test
     void getProductPriceWithErrorInPath() throws Exception{
@@ -69,15 +72,13 @@ class PricesControllerTest {
         int brandId = 1;
         int productId = 35455;
 
-        Date timestamp = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM-HH:mm:ss");
-        String formattedTimestamp = formatter.format(timestamp);
-
         ResultActions result = mockMvc.perform(
                 get("/api/prices/{brandId}/{productId}?timestamp={timestamp}",
                         brandId,
                         productId,
-                        formattedTimestamp
+                        LocalDateTime.now().format(
+                                DateTimeFormatter.ofPattern("yyyy")
+                        )
                 )
         );
 
@@ -90,15 +91,11 @@ class PricesControllerTest {
         int brandId = -1;
         int productId = 35455;
 
-        Date timestamp = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
-        String formattedTimestamp = formatter.format(timestamp);
-
         ResultActions result = mockMvc.perform(
                 get("/api/prices/{brandId}/{productId}?timestamp={timestamp}",
                         brandId,
                         productId,
-                        formattedTimestamp
+                        LocalDateTime.now().format(df)
                 )
         );
 
@@ -111,25 +108,23 @@ class PricesControllerTest {
         int brandId = 1;
         int productId = 35455;
 
-        Date timestamp = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
-        String formattedTimestamp = formatter.format(timestamp);
+        LocalDateTime dateTime = LocalDateTime.now();
 
         doThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR))
                 .when(this.getProductPriceUseCase)
-                .handle(anyInt(), anyInt(), any(Date.class));
+                .handle(anyInt(), anyInt(), any(LocalDateTime.class));
 
         ResultActions result = mockMvc.perform(
                 get("/api/prices/{brandId}/{productId}?timestamp={timestamp}",
                         brandId,
                         productId,
-                        formattedTimestamp
+                        dateTime.format(df)
                 )
         );
 
         result.andExpect(status().isInternalServerError());
         verify(getProductPriceUseCase, times(1))
-                .handle(eq(brandId), eq(productId), eq(formatter.parse(formattedTimestamp)));
+                .handle(eq(brandId), eq(productId), eq(dateTime.truncatedTo(ChronoUnit.SECONDS)));
     }
 
     @Test
@@ -137,24 +132,22 @@ class PricesControllerTest {
         int brandId = 1;
         int productId = 35455;
 
-        Date timestamp = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
-        String formattedTimestamp = formatter.format(timestamp);
+        LocalDateTime dateTime = LocalDateTime.now();
 
         doReturn(new ProductPriceDTO())
                 .when(this.getProductPriceUseCase)
-                .handle(anyInt(), anyInt(), any(Date.class));
+                .handle(anyInt(), anyInt(), any(LocalDateTime.class));
 
         ResultActions result = mockMvc.perform(
                 get("/api/prices/{brandId}/{productId}?timestamp={timestamp}",
                         brandId,
                         productId,
-                        formattedTimestamp
+                        dateTime.format(df)
                 )
         );
 
         result.andExpect(status().isOk());
         verify(getProductPriceUseCase, times(1))
-                .handle(eq(brandId), eq(productId), eq(formatter.parse(formattedTimestamp)));
+                .handle(eq(brandId), eq(productId), eq(dateTime.truncatedTo(ChronoUnit.SECONDS)));
     }
 }

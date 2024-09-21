@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Component
 public class GetProductPriceHandler implements GetProductPriceUseCase {
@@ -21,19 +18,16 @@ public class GetProductPriceHandler implements GetProductPriceUseCase {
     private PricesRepository pricesRepository;
 
     @Override
-    public ProductPriceDTO handle(int brandId, int productId, Date timestamp) {
-        List<PriceList> priceLists = this.pricesRepository.getProductPrices(
+    public ProductPriceDTO handle(int brandId, int productId, LocalDateTime dateTime) {
+        PriceList result = this.pricesRepository.getProductPrice(
                 brandId,
                 productId,
-                timestamp
+                dateTime
         );
-        if (priceLists.isEmpty()) {
+        if (result == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        
-        priceLists.sort(Comparator.comparingInt(PriceList::getPriority));
-        Collections.reverse(priceLists);
 
-        return new ProductPriceDTO(priceLists.get(0));
+        return new ProductPriceDTO(result);
     }
 }

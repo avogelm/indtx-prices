@@ -2,19 +2,17 @@ package com.avogelm.indtxprices.application.driverports;
 
 import com.avogelm.indtxprices.application.core.domain.model.PriceList;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class ProductPriceDTO {
     private int productId;
     private int brandId;
     private int priceList;
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private float price;
 
-    public ProductPriceDTO() {
-        //TODO from entity
-    }
+    public ProductPriceDTO() {}
 
     public ProductPriceDTO(PriceList priceList) {
         this.priceList = priceList.getPriceList();
@@ -37,11 +35,11 @@ public class ProductPriceDTO {
         return priceList;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
@@ -58,8 +56,8 @@ public class ProductPriceDTO {
         return this.priceList == objMatch.getPriceList()
             && this.brandId == objMatch.getBrandId()
             && this.productId == objMatch.getProductId()
-            && this.startDate == objMatch.getStartDate()
-            && this.endDate == objMatch.getEndDate()
+            && this.startDate.isEqual(objMatch.getStartDate())
+            && this.endDate.isEqual(objMatch.getEndDate())
             && this.price == objMatch.getPrice();
     }
 }

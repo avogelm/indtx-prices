@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Repository
 public interface PricesH2Repository extends JpaRepository<PriceList, Integer>, PricesRepository {
@@ -15,8 +14,9 @@ public interface PricesH2Repository extends JpaRepository<PriceList, Integer>, P
             value = "select * from prices "
             + " where brand_id=?1 "
             + " and product_id=?2 "
-            + " and ?3 between start_date and end_date ",
+            + " and ?3 between start_date and end_date "
+            + " order by priority desc limit 1",
             nativeQuery = true
     )
-    public List<PriceList> getProductPrices(int brandId, int productId, Date timestamp);
+    public PriceList getProductPrice(int brandId, int productId, LocalDateTime dateTime);
 }
