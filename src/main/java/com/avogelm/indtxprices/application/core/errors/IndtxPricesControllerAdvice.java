@@ -87,8 +87,6 @@ public class IndtxPricesControllerAdvice {
 
         logger.error(e.getMessage());
 
-        // For miscelaneous errors, we don't want to provide any details on the
-        // response message. TODO: All information will be internally logged.
         return new ResponseEntity<>(
                 new ErrorResponse(),
                 HttpStatus.INTERNAL_SERVER_ERROR
