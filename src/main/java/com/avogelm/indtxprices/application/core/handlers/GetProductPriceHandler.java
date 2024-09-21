@@ -25,7 +25,10 @@ public class GetProductPriceHandler implements GetProductPriceUseCase {
                 dateTime
         );
         if (result == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Price List Not Found"
+            );
         }
 
         return new ProductPriceDTO(result);

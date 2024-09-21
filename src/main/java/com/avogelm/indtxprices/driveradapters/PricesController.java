@@ -21,15 +21,15 @@ public class PricesController {
     @GetMapping("{brandId}/{productId}")
     @ResponseStatus(HttpStatus.OK)
     public ProductPriceDTO getProductPrice(
-            @PathVariable @Min(value=1, message="Brand ID must be >= 1")
+            @PathVariable @Min(value = 1, message = "Brand ID must be >= 1")
             int brandId,
 
-            @PathVariable @Min(value=1, message="Product ID must be >= 1")
+            @PathVariable @Min(value = 1, message = "Product ID must be >= 1")
             int productId,
 
             @RequestParam("timestamp")
             @NotNull(message = "Application Timestamp Required")
-            @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+            @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
             LocalDateTime dateTime
     ) {
         return this.getProductPriceUseCase.handle(
