@@ -43,3 +43,4 @@ El microservicio ha sido diseñado siguiendo el patrón de [puertos y adaptadore
 - Instalación de dependencias: `mvn install`
 - Ejecución de Tests: `mvn test`
 - Feed de datos iniciales: `src/main/resources/data.sql`
+- Swagger UI disponible una vez levantado el microservicio en `/swagger-ui/index.html`
