@@ -40,7 +40,11 @@ El microservicio ha sido diseñado siguiendo el patrón de [puertos y adaptadore
 
 
 ## Modo de uso
+### Desarrollo
 - Instalación de dependencias: `mvn install`
 - Ejecución de Tests: `mvn test`
 - Feed de datos iniciales: `src/main/resources/data.sql`
+### Levantar el microservicio
+1. `docker build -t indtx-prices .`
+2. `docker run -p 8080:8080 indtx-prices`
 - Swagger UI disponible una vez levantado el microservicio en `/swagger-ui/index.html`
