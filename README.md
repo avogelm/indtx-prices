@@ -35,7 +35,7 @@ En la que:
 El microservicio ha sido diseñado siguiendo el patrón de [puertos y adaptadores (Arquitectura Hexagonal)](https://alistair.cockburn.us/hexagonal-architecture/).
 
 ### Estructura de clases
-![image](https://github.com/avogelm/indtx-prices/blob/master/Model%20Diagram.png)
+![image](https://github.com/avogelm/indtx-prices/blob/master/Model%20Diagram.jpg)
 
 
 
