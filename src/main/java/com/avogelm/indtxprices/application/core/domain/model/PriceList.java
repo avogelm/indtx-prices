@@ -31,7 +31,7 @@ public class PriceList {
     private float price;
 
     @Column(name = "curr")
-    private String curr;
+    private String currency;
 
     public PriceList() {}
 
@@ -43,7 +43,7 @@ public class PriceList {
         this.endDate = endDate;
         this.priority = priority;
         this.price = price;
-        this.curr = curr;
+        this.currency = curr;
     }
 
     public int getPriceList() {
@@ -94,7 +94,7 @@ public class PriceList {
         this.price = price;
     }
 
-    public void setCurr(String curr) {
-        this.curr = curr;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

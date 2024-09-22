@@ -35,7 +35,7 @@ class PricesH2RepositoryTest {
         System.out.println(testPriceList.getPriceList());
         testPriceList.setBrandId(1);
         testPriceList.setProductId(35455);
-        testPriceList.setCurr("EUR");
+        testPriceList.setCurrency("EUR");
 
         testPriceList.setPriority(0);
         testPriceList.setPrice(price1);

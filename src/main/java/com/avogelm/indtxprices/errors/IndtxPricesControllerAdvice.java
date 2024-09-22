@@ -1,4 +1,4 @@
-package com.avogelm.indtxprices.application.core.errors;
+package com.avogelm.indtxprices.errors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

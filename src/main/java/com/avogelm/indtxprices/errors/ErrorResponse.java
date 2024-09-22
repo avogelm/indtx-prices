@@ -1,4 +1,4 @@
-package com.avogelm.indtxprices.application.core.errors;
+package com.avogelm.indtxprices.errors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
