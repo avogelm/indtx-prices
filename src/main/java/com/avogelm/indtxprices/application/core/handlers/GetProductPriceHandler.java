@@ -3,7 +3,7 @@ package com.avogelm.indtxprices.application.core.handlers;
 import com.avogelm.indtxprices.application.core.domain.model.PriceList;
 import com.avogelm.indtxprices.application.drivenports.PricesRepository;
 import com.avogelm.indtxprices.application.driverports.GetProductPriceUseCase;
-import com.avogelm.indtxprices.application.driverports.ProductPriceDTO;
+import com.avogelm.indtxprices.application.driverports.dto.ProductPriceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

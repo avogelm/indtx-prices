@@ -1,7 +1,7 @@
 package com.avogelm.indtxprices.driveradapters;
 
 import com.avogelm.indtxprices.application.driverports.GetProductPriceUseCase;
-import com.avogelm.indtxprices.application.driverports.ProductPriceDTO;
+import com.avogelm.indtxprices.application.driverports.dto.ProductPriceDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

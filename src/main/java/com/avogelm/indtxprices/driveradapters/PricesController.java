@@ -1,7 +1,8 @@
 package com.avogelm.indtxprices.driveradapters;
 
 import com.avogelm.indtxprices.application.driverports.GetProductPriceUseCase;
-import com.avogelm.indtxprices.application.driverports.ProductPriceDTO;
+import com.avogelm.indtxprices.application.driverports.dto.ProductPriceDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,15 @@ public class PricesController {
     @GetMapping("{brandId}/{productId}")
     @ResponseStatus(HttpStatus.OK)
     public ProductPriceDTO getProductPrice(
+            @Valid
             @PathVariable @Min(value = 1, message = "Brand ID must be >= 1")
             int brandId,
 
+            @Valid
             @PathVariable @Min(value = 1, message = "Product ID must be >= 1")
             int productId,
 
+            @Valid
             @RequestParam("timestamp")
             @NotNull(message = "Application Timestamp Required")
             @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")

@@ -1,4 +1,4 @@
-package com.avogelm.indtxprices.application.driverports;
+package com.avogelm.indtxprices.application.driverports.dto;
 
 import com.avogelm.indtxprices.application.core.domain.model.PriceList;
 
