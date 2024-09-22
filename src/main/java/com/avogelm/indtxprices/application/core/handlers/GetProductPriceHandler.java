@@ -25,9 +25,11 @@ public class GetProductPriceHandler implements GetProductPriceUseCase {
                 dateTime
         );
         if (result == null) {
+            String NOT_FOUND_MESSAGE = "Price List could not be found for product with ID %d of brand with ID %s.";
+            String message = String.format(NOT_FOUND_MESSAGE, productId, brandId);
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
-                    "Price List Not Found"
+                    message
             );
         }
 
